@@ -32,3 +32,5 @@ Kodunuzda API Key'i Kullanma
 "google.generativeai" modülünü içe aktarın.
 
 "generate_content()" işlevini çağırırken api_key parametresine API Key'inizi geçirin.
+
+![example_chatbox](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/eb628e5e-880a-4ccd-93b5-e821d19cd5bc)
