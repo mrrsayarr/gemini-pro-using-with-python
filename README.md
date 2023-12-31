@@ -1,4 +1,6 @@
-
+```
+$ pip install google-generativeai
+```
 API Key'i Alma
 
 Google Cloud Platform'da bir hesap oluşturun.
