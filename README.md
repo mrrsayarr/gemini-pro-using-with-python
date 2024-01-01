@@ -36,9 +36,11 @@ Kodunuzda API Key'i Kullanma
 "generate_content()" işlevini çağırırken api_key parametresine API Key'inizi geçirin.
 
 #V1.0
+
 ![example_chatbox](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/eb628e5e-880a-4ccd-93b5-e821d19cd5bc)
 
 #V1.1
+
 ![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/18e22bb1-e2a4-480d-a5ab-348c4e5c077e)
 
 
