@@ -1,6 +1,27 @@
 ```
 $ pip install google-generativeai
 ```
+
+Get an API Key
+
+Create a Google Cloud Platform account.
+Create a project.
+Under the APIs & Services tab, select APIs & services.
+Click the New button and select Add API & service.
+On the Add API & service page, select Google AI and then select Gemini Pro.
+After selecting Gemini Pro, click the Add button.
+After the Gemini Pro API is added, select APIs & services under the APIs & Services page.
+Under the APIs & services page, select Gemini Pro and then select API Keys.
+On the API Keys page, click the Create New API Key button.
+On the Create New API Key page, select Read & write for API Key Type and then click the Create button.
+After the API Key is created, click the Show API Key button on the API Key page.
+On the API Key page, copy the API Key value.
+Using Your API Key in Your Code
+
+Import the "google.generativeai" module.
+When calling the "generate_content()" function, pass your API Key to the api_key parameter.
+
+
 API Key'i Alma
 
 Google Cloud Platform'da bir hesap oluşturun.
