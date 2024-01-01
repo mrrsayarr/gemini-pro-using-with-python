@@ -41,6 +41,7 @@ Kodunuzda API Key'i Kullanma
 
 #V1.1
 
-![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/18e22bb1-e2a4-480d-a5ab-348c4e5c077e)
+![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/d491680d-afaa-4951-9334-b89eef08a227)
+
 
 
