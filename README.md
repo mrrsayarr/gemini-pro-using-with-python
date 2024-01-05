@@ -119,5 +119,10 @@ Kodunuzda API Key'i Kullanma
 
 ![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/d491680d-afaa-4951-9334-b89eef08a227)
 
+# V1.2
+
+![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/d25a373a-3179-4248-87f5-35b03f0f2a6e)
+
+
 
 
