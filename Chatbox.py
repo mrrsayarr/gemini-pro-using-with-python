@@ -13,6 +13,11 @@ def on_focusout(event):
         entry_box.insert(0, "Enter your question...")
         entry_box.config(fg='grey')
 
+def clear_response_area():
+    response_area.config(state=tk.NORMAL)
+    response_area.delete(1.0, tk.END)
+    response_area.config(state=tk.DISABLED)
+
 def send_question(event=None):
     question = entry_box.get()
     if question == "Enter your question...":
@@ -65,6 +70,12 @@ submit_button = tk.Button(
 )
 submit_button.pack(side=tk.LEFT, padx=5, pady=5)
 
+# Clear button customization
+clear_button = tk.Button(
+    root, text="Clear", width=5, height=1, bg="#ff3333", fg="white", font=("Arial", 14, "bold"),
+    command=clear_response_area
+)
+clear_button.pack(side=tk.LEFT, padx=5, pady=5)
 
 # Bind Enter key to send_question function
 root.bind("<Return>", send_question)
