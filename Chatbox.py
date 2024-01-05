@@ -27,15 +27,15 @@ def send_question(event=None):
     response_area.config(state=tk.NORMAL)  # Make response_area editable
     response_area.insert(tk.END, "You: " + question + "\n")
 
-    # Check if the response text is surrounded by triple backticks
-    if response.text.startswith("```") and response.text.endswith("```"):
+    # Check if the response text contains at least three backticks
+    if "```" in response.text.lower():
         response_area.insert(tk.END, f"{response.text}\n", "code")
     else:
         response_area.insert(tk.END, f"{response.text}\n")
 
     response_area.insert(tk.END,
                          "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
-                         + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n")
+                         + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n")
 
     response_area.config(state=tk.DISABLED)  # Disable editing after inserting text
     response_area.yview(tk.END)
@@ -52,17 +52,19 @@ response_area.tag_configure("code", foreground="red", font=("Arial", 12, "bold")
 response_area.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
 # Entry box customization
-entry_box = tk.Entry(root, width=60, font=("Arial", 13), fg='grey')
-entry_box.pack(side=tk.TOP, padx=10, pady=(10, 5), ipadx=5, ipady=5)  # Adjust pady as per your preference
+entry_box = tk.Entry(root, width=60, font=("Arial", 13), fg='grey', relief=tk.GROOVE, bd=2, highlightcolor="#4CAF50", highlightthickness=2, borderwidth=2, selectborderwidth=2, insertborderwidth=2, selectbackground="#4CAF50", selectforeground="white", insertbackground="#4CAF50", insertwidth=4)
+entry_box.pack(side=tk.LEFT, padx=10, pady=(10, 5), ipadx=5, ipady=5)  # Adjust pady as per your preference
 entry_box.insert(0, "Enter your question...")
 entry_box.bind('<FocusIn>', on_entry_click)
 entry_box.bind('<FocusOut>', on_focusout)
 
+# Submit button customization
 submit_button = tk.Button(
-    root, text="→", width=8, height=2, bg="gray", fg="white", font="Arial 14",
+    root, text="Ask", width=5, height=1, bg="#4CAF50", fg="white", font=("Arial", 14, "bold"),
     command=send_question
 )
-submit_button.pack(side=tk.TOP, padx=10, pady=10)
+submit_button.pack(side=tk.LEFT, padx=5, pady=5)
+
 
 # Bind Enter key to send_question function
 root.bind("<Return>", send_question)
