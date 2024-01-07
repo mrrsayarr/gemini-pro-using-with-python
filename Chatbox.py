@@ -1,6 +1,24 @@
-import tkinter as tk
-from tkinter import messagebox
 import ApiKey
+import tkinter as tk
+from tkinter import messagebox, Menu
+
+def copy_text(event):
+    if response_area.tag_ranges(tk.SEL):
+        selected_text = response_area.get(tk.SEL_FIRST, tk.SEL_LAST)
+        root.clipboard_clear()
+        root.clipboard_append(selected_text)
+
+def show_context_menu(event):
+    context_menu.post(event.x_root, event.y_root)
+
+def copy_text_entry_box():
+    selected_text = entry_box.get()
+    root.clipboard_clear()
+    root.clipboard_append(selected_text)
+
+def paste_text_entry_box():
+    entry_box.delete(0, tk.END)
+    entry_box.insert(0, root.clipboard_get())
 
 def on_entry_click(event):
     if entry_box.get() == "Enter your question...":
@@ -30,13 +48,19 @@ def send_question(event=None):
     response = ApiKey.model.generate_content(prompt_parts)
 
     response_area.config(state=tk.NORMAL)  # Make response_area editable
-    response_area.insert(tk.END, "You: " + question + "\n")
+    response_area.insert(tk.END, "You: " + question + "\n\n")
 
-    # Check if the response text contains at least three backticks
-    if "```" in response.text.lower():
-        response_area.insert(tk.END, f"{response.text}\n", "code")
-    else:
-        response_area.insert(tk.END, f"{response.text}\n")
+    in_code_block = False
+    response_lines = response.text.split('\n')
+
+    for line in response_lines:
+        if line.startswith("```") and line.endswith("```"):
+            response_area.insert(tk.END, f"{line}\n", "code")
+            in_code_block = not in_code_block
+        elif in_code_block:
+            response_area.insert(tk.END, f"{line}\n", "code")
+        else:
+            response_area.insert(tk.END, f"{line}\n", "default")  # Default tag for non-code lines
 
     response_area.insert(tk.END,
                          "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
@@ -45,23 +69,50 @@ def send_question(event=None):
     response_area.config(state=tk.DISABLED)  # Disable editing after inserting text
     response_area.yview(tk.END)
 
-
+# Main Window
 root = tk.Tk()
 root.title("Chatbox")
-root.configure(background="lightgray")
+root.configure(background="white")
+
+# Window icon
+# root.iconbitmap('gemini.ico')
+# pyinstaller.exe --onefile --windowed --icon=gemini.ico Chatbox.py #"EXPORT EXE FILE"
 
 # Define a tag for the code (red color and bold)
-response_area = tk.Text(root, width=80, height=30, wrap=tk.WORD, background="white", state=tk.DISABLED)
-response_area.tag_configure("code", foreground="red", font=("Arial", 12, "bold"))
-
+response_area = tk.Text(root, width=80, height=30, wrap=tk.WORD, background="white", state=tk.DISABLED,
+                        highlightbackground="black", highlightcolor="yellow", insertbackground="red")
+response_area.tag_configure("code", foreground="red", font=("Courier New", 13, "bold"))
+response_area.tag_configure("default", foreground="black", font=("Courier New", 13))  # Default tag for non-code lines
 response_area.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10, pady=10)
+response_area.tag_configure("code", foreground="black", font=("Courier New", 13))
+response_area.tag_configure("default", foreground="black", font=("Courier New", 13))
+
+# Create a context menu
+context_menu = Menu(root, tearoff=0)
+context_menu.add_command(label="Copy", command=copy_text)
+
+# Bind right-click event to show_context_menu function
+response_area.bind("<Button-3>", show_context_menu)
 
 # Entry box customization
-entry_box = tk.Entry(root, width=60, font=("Arial", 13), fg='grey', relief=tk.GROOVE, bd=2, highlightcolor="#4CAF50", highlightthickness=2, borderwidth=2, selectborderwidth=2, insertborderwidth=2, selectbackground="#4CAF50", selectforeground="white", insertbackground="#4CAF50", insertwidth=4)
+entry_box = tk.Entry(root, width=60, font=("Arial", 13), fg='grey', relief=tk.GROOVE, bd=2,
+                     highlightcolor="#4CAF50", highlightthickness=2, borderwidth=2, selectborderwidth=2, insertborderwidth=2,
+                     selectbackground="#4CAF50", selectforeground="white", insertbackground="#4CAF50", insertwidth=4)
 entry_box.pack(side=tk.LEFT, padx=10, pady=(10, 5), ipadx=5, ipady=5)  # Adjust pady as per your preference
 entry_box.insert(0, "Enter your question...")
 entry_box.bind('<FocusIn>', on_entry_click)
 entry_box.bind('<FocusOut>', on_focusout)
+
+# Create a context menu for entry_box
+entry_box_context_menu = Menu(root, tearoff=0)
+entry_box_context_menu.add_command(label="Copy", command=copy_text_entry_box)
+entry_box_context_menu.add_command(label="Paste", command=paste_text_entry_box)
+
+def show_entry_box_context_menu(event):
+    entry_box_context_menu.post(event.x_root, event.y_root)
+
+# Bind right-click event to show_entry_box_context_menu function
+entry_box.bind("<Button-3>", show_entry_box_context_menu)
 
 # Submit button customization
 submit_button = tk.Button(
@@ -80,7 +131,7 @@ clear_button.pack(side=tk.LEFT, padx=5, pady=5)
 # Bind Enter key to send_question function
 root.bind("<Return>", send_question)
 
-# Pencere boyutu ve konumu
+# Windows size
 window_width = max(800, root.winfo_screenwidth() // 2)
 window_height = max(610, root.winfo_screenheight() // 2)
 
