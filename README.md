@@ -123,6 +123,13 @@ Kodunuzda API Key'i Kullanma
 
 ![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/d25a373a-3179-4248-87f5-35b03f0f2a6e)
 
+# V1.3
+
+![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/245eeb24-8251-47bd-b356-8423336f94f7)
+
+![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/05a0a404-8b84-49a1-8796-163935156314)
+
+
 
 
 
