@@ -1,6 +1,8 @@
 import ApiKey
 import tkinter as tk
 from tkinter import messagebox, Menu
+from datetime import datetime
+import os
 
 def copy_text(event):
     if response_area.tag_ranges(tk.SEL):
@@ -48,7 +50,9 @@ def send_question(event=None):
     response = ApiKey.model.generate_content(prompt_parts)
 
     response_area.config(state=tk.NORMAL)  # Make response_area editable
-    response_area.insert(tk.END, "You: " + question + "\n\n")
+
+    # Add user question to the response area
+    response_area.insert(tk.END, f"You: {question}\n\n", "default")
 
     in_code_block = False
     response_lines = response.text.split('\n')
@@ -69,14 +73,28 @@ def send_question(event=None):
     response_area.config(state=tk.DISABLED)  # Disable editing after inserting text
     response_area.yview(tk.END)
 
+    # Save the conversation to a file
+    save_to_file(f"You: {question}\n\n{response.text}")
+
+# Conversation save file
+def save_to_file(content):
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    file_path = f"Chatbox_{today_date}.txt"
+
+    # If file already exists, read the content first
+    if os.path.exists(file_path):
+        with open(file_path, "r") as file:
+            existing_content = file.read()
+            content = existing_content + "\n\n" + content
+
+    # Save the content to the file
+    with open(file_path, "w") as file:
+        file.write(content)
+
 # Main Window
 root = tk.Tk()
 root.title("Chatbox")
 root.configure(background="white")
-
-# Window icon
-# root.iconbitmap('gemini.ico')
-# pyinstaller.exe --onefile --windowed --icon=gemini.ico Chatbox.py #"EXPORT EXE FILE"
 
 # Define a tag for the code (red color and bold)
 response_area = tk.Text(root, width=80, height=30, wrap=tk.WORD, background="white", state=tk.DISABLED,
@@ -95,10 +113,10 @@ context_menu.add_command(label="Copy", command=copy_text)
 response_area.bind("<Button-3>", show_context_menu)
 
 # Entry box customization
-entry_box = tk.Entry(root, width=60, font=("Arial", 13), fg='grey', relief=tk.GROOVE, bd=2,
+entry_box = tk.Entry(root, font=("Arial", 13), fg='grey', relief=tk.GROOVE, bd=2,
                      highlightcolor="#4CAF50", highlightthickness=2, borderwidth=2, selectborderwidth=2, insertborderwidth=2,
                      selectbackground="#4CAF50", selectforeground="white", insertbackground="#4CAF50", insertwidth=4)
-entry_box.pack(side=tk.LEFT, padx=10, pady=(10, 5), ipadx=5, ipady=5)  # Adjust pady as per your preference
+entry_box.pack(side=tk.LEFT, padx=10, pady=(10, 5), ipadx=5, ipady=5, expand=True, fill='both')  # Add expand and fill
 entry_box.insert(0, "Enter your question...")
 entry_box.bind('<FocusIn>', on_entry_click)
 entry_box.bind('<FocusOut>', on_focusout)
@@ -119,14 +137,14 @@ submit_button = tk.Button(
     root, text="Ask", width=5, height=1, bg="#4CAF50", fg="white", font=("Arial", 14, "bold"),
     command=send_question
 )
-submit_button.pack(side=tk.LEFT, padx=5, pady=5)
+submit_button.pack(side=tk.LEFT, padx=(0, 5), pady=(10, 5))
 
 # Clear button customization
 clear_button = tk.Button(
     root, text="Clear", width=5, height=1, bg="#ff3333", fg="white", font=("Arial", 14, "bold"),
     command=clear_response_area
 )
-clear_button.pack(side=tk.LEFT, padx=5, pady=5)
+clear_button.pack(side=tk.LEFT, padx=(0, 5), pady=(10, 5))
 
 # Bind Enter key to send_question function
 root.bind("<Return>", send_question)
