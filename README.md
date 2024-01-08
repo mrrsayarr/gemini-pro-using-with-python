@@ -101,6 +101,7 @@ model = genai.GenerativeModel(model_name="gemini-pro",
 
 ![image](https://github.com/mrrsayarr/Used-gemini-pro-with-Python-GUI/assets/64076325/05a0a404-8b84-49a1-8796-163935156314)
 
+* Automatically saves Response text
 
 
 
