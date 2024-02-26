@@ -66,9 +66,7 @@ def send_question(event=None):
         else:
             response_area.insert(tk.END, f"{line}\n", "default")  # Default tag for non-code lines
 
-    response_area.insert(tk.END,
-                         "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
-                         + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n")
+    response_area.insert(tk.END, "▬"*116 + "\n")
 
     response_area.config(state=tk.DISABLED)  # Disable editing after inserting text
     response_area.yview(tk.END)
