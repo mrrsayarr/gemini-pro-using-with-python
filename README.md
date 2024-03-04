@@ -1,4 +1,17 @@
 ```
+# Make Application
+
+$ pyinstaller.exe --onefile --noconsole  .\Chatbox\ChatboX.py
+```
+
+```
+# Make Application with ico
+
+$ pyinstaller.exe --onefile --noconsole --icon=gemini.ico .\Chatbox\Chatbox.py
+```
+
+
+```
 $ pip install google-generativeai
 ```
 
